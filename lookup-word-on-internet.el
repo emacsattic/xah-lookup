@@ -10,7 +10,7 @@
 ;;; DESCRIPTION
 
 ;; this package provides convenient commands for looking up the web.
-;; The exposed functions are:
+;; The commands are:
 
 ;; lookup-word-on-internet
 ;; lookup-google
@@ -20,25 +20,21 @@
 ;; lookup-answers.com
 ;; lookup-wiktionary
 
-
 ;;; REQUIREMENT
 
 ;; You need to have 2 elisp util 〔xeu_elisp_util.el〕 and 〔xfrp_find_replace_pairs.el〕, available at
-;; http://code.google.com/p/ergoemacs/source/browse/trunk/packages/xeu_elisp_util.el
-;; http://code.google.com/p/ergoemacs/source/browse/trunk/packages/xfrp_find_replace_pairs.el
-
-;; here's linux shell command to download them:
-;; wget http://ergoemacs.googlecode.com/svn/trunk/packages/xeu_elisp_util.el
-;; wget http://ergoemacs.googlecode.com/svn/trunk/packages/xfrp_find_replace_pairs.el
+;; https://github.com/xahlee/xeu_elisp_util.el
+;; https://github.com/xahlee/xfrp_find_replace_pairs.el
 
 ;;; INSTALL
 
-;; To install, place this file 〔lookup-word-on-internet.el〕 in the directory 〔~/.emacs.d/〕.
+;; To install, place this file 〔lookup-word-on-internet.el〕 in the directory 〔~/.emacs.d/lisp/〕.
 
-;; also place the files 〔xeu_elisp_util.el〕 and 〔xfrp_find_replace_pairs.el〕 in 〔~/.emacs.d/〕, if you haven't done already.
+;; also place the files 〔xeu_elisp_util.el〕 and 〔xfrp_find_replace_pairs.el〕 in 〔~/.emacs.d/lisp/〕, if you haven't done already.
 
 ;; Then, place the following code in your emacs init file
 
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 ;; (autoload 'lookup-google "lookup-word-on-internet" "Lookup in browser" t)
 ;; (autoload 'lookup-wikipedia "lookup-word-on-internet" "Lookup in browser" t)
 ;; (autoload 'lookup-word-dict-org "lookup-word-on-internet" "Lookup in browser" t)
@@ -46,9 +42,9 @@
 ;; (autoload 'lookup-wiktionary "lookup-word-on-internet" "Lookup word in browser" t)
 
 ;; ;; Suggested keys
-;; (global-set-key (kbd "<f1> 1") 'lookup-google)
-;; (global-set-key (kbd "<f1> 2") 'lookup-wikipedia)
-;; (global-set-key (kbd "<f1> 3") 'lookup-word-definition)
+;; (global-set-key (kbd "<f1> 7") 'lookup-google)
+;; (global-set-key (kbd "<f1> 8") 'lookup-wikipedia)
+;; (global-set-key (kbd "<f1> 9") 'lookup-word-definition)
 ;; …
 
 ;;; DOCUMENTATION
@@ -56,7 +52,10 @@
 ;; Just some simple useful commands
 ;; For detail, see http://ergoemacs.org/emacs/emacs_lookup_ref.html
 
-;; donate $3 please. Paypal to xah@xahlee.org , thanks.
+;; like it? buy my emacs tutorial
+
+;; Buy Xah Emacs Tutorial
+;; http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html
 
 ;;; HISTORY
 
@@ -154,7 +153,7 @@ See also `lookup-word-on-internet'."
   "Lookup current word or text selection in URL `http://answers.com/'.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://www.answers.com/main/ntquery?s=�" 
+  (let ((dictUrl "http://www.answers.com/main/ntquery?s=�"
 ) )
     (lookup-word-on-internet input-word dictUrl) ) )
 
@@ -173,7 +172,5 @@ The dictionaries used are in `all-dictionaries'.
 See also `lookup-word-on-internet'."
   (interactive)
   (mapc (lambda (dictUrl) (lookup-word-on-internet input-word dictUrl)) all-dictionaries) )
-
-
 
 (provide 'lookup-word-on-internet)
