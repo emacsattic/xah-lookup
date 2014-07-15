@@ -69,7 +69,7 @@
 ;;; Code:
 
 
-(require 'xeu_elisp_util)
+(require 'xeu_elisp_util) ; need asciify-text
 
 (defvar all-dictionaries nil "A vector of dictionaries. Used by `lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
 (setq all-dictionaries [
@@ -100,7 +100,7 @@ For a list of online reference sites, see:
               input-word
             (if (region-active-p)
                 (buffer-substring-no-properties (region-beginning) (region-end))
-              (thing-at-point 'word) )) )
+              (thing-at-point 'symbol) )) )
 
     (setq ξword (replace-regexp-in-string " " "%20" (asciify-text ξword)))
 
