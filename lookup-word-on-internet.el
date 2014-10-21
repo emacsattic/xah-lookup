@@ -59,6 +59,7 @@
 
 ;;; HISTORY
 
+;; 2014-10-20 changes are no longer logged here. Just github. version goes by date.
 ;; version 1.5, 2013-04-21 removed lookup-php-ref. Doesn't belong here.
 ;; version 1.4, 2013-03-23 added 2 more dict to the all-dictionaries. Good for vocabulary researchers
 ;; version 1.3, 2012-05-11 added “lookup-all-dictionaries”.
@@ -69,7 +70,7 @@
 ;;; Code:
 
 
-(require 'xeu_elisp_util) ; need asciify-text
+
 
 (defvar all-dictionaries nil "A vector of dictionaries. Used by `lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
 (setq all-dictionaries [
@@ -81,96 +82,141 @@
 "http://www.etymonline.com/index.php?search=�" ; etymology
 ] )
 
-(defun lookup-word-on-internet (&optional input-word site-to-use)
+(defun xah-asciify-region (&optional φfrom φto)
+  "Change some Unicode characters into equivalent ASCII ones.
+For example, “passé” becomes “passe”.
+
+This function works on chars in European languages, and does not transcode arbitrary Unicode chars (such as Greek, math symbols).  Un-transformed unicode char remains in the string.
+
+When called interactively, work on text selection or current line.
+Version 2014-10-20"
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (list (line-beginning-position) (line-end-position))))
+  (let ((ξinputStr (buffer-substring-no-properties φfrom φto))
+        (ξcharChangeMap [
+                         ["á\\|à\\|â\\|ä\\|ã\\|å" "a"]
+                         ["é\\|è\\|ê\\|ë" "e"]
+                         ["í\\|ì\\|î\\|ï" "i"]
+                         ["ó\\|ò\\|ô\\|ö\\|õ\\|ø" "o"]
+                         ["ú\\|ù\\|û\\|ü"     "u"]
+                         ["Ý\\|ý\\|ÿ"     "y"]
+                         ["ñ" "n"]
+                         ["ç" "c"]
+                         ["ð" "d"]
+                         ["þ" "th"]
+                         ["ß" "ss"]
+                         ["æ" "ae"]
+                         ]))
+    (let ((case-fold-search t))
+        (save-restriction
+          (narrow-to-region φfrom φto)
+          (mapc
+           (lambda (ξcurrentPair)
+             (goto-char (point-min))
+             (while (search-forward-regexp (elt ξcurrentPair 0) (point-max) t)
+               (replace-match (elt ξcurrentPair 1))))
+           ξcharChangeMap)))))
+
+(defun xah-asciify-string (φstring)
+  "Change some Unicode characters into equivalent ASCII ones.
+For example, “passé” becomes “passe”.
+See `xah-asciify-region'
+Version 2014-10-20"
+  (with-temp-buffer 
+      (insert φstring)
+      (xah-asciify-region (point-min) (point-max))
+      (buffer-string)))
+
+(defun lookup-word-on-internet (&optional φinput-word φsite-to-use)
   "Look up current word or text selection in a online reference site.
 This command launches/switches you to default browser.
 
-Optional argument INPUT-WORD and SITE-TO-USE can be given.
-SITE-TO-USE a is URL string in this form: 「http://en.wiktionary.org/wiki/�」.
+Optional argument φinput-word and φsite-to-use can be given.
+φsite-to-use a is URL string in this form: 「http://en.wiktionary.org/wiki/�」.
 the 「�」 is a placeholder for the query string.
 
-If SITE-TO-USE is nil, Google Search is used.
+If ΦSITE-TO-USE is nil, Google Search is used.
 
 For a list of online reference sites, see:
  URL `http://ergoemacs.org/emacs/emacs_lookup_ref.html'"
   (interactive)
-  (let (ξword refUrl myUrl)
+  (let (ξword ξrefUrl ξmyUrl)
     (setq ξword
-          (if input-word
-              input-word
+          (if φinput-word
+              φinput-word
             (if (region-active-p)
                 (buffer-substring-no-properties (region-beginning) (region-end))
-              (thing-at-point 'symbol) )) )
+              (thing-at-point 'symbol))))
 
-    (setq ξword (replace-regexp-in-string " " "%20" (asciify-text ξword)))
+    (setq ξword (replace-regexp-in-string " " "%20" (xah-asciify-string ξword)))
 
-    (setq refUrl
-          (if site-to-use
-              site-to-use
-            "http://www.google.com/search?q=�" ) )
+    (setq ξrefUrl
+          (if φsite-to-use
+              φsite-to-use
+            "http://www.google.com/search?q=�" ))
 
-    (setq myUrl (replace-regexp-in-string "�" ξword refUrl t t))
+    (setq ξmyUrl (replace-regexp-in-string "�" ξword ξrefUrl t t))
     (cond
      ((string-equal system-type "windows-nt") ; any flavor of Windows
-      (browse-url-default-windows-browser myUrl)
-      )
+      (browse-url-default-windows-browser ξmyUrl))
      ((string-equal system-type "gnu/linux")
-      (browse-url myUrl)
-      )
+      (eww ξmyUrl))
      ((string-equal system-type "darwin") ; Mac
-      (browse-url myUrl) ) ) ))
+      (browse-url ξmyUrl)))))
 
-(defun lookup-google (&optional input-word)
+(defun lookup-google (&optional φinput-word)
   "Lookup current word or text selection in Google Search.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://www.google.com/search?q=�" ))
-    (lookup-word-on-internet input-word dictUrl) ) )
+  (let ((ξdictUrl "http://www.google.com/search?q=�" ))
+    (lookup-word-on-internet φinput-word ξdictUrl) ) )
 
-(defun lookup-wikipedia (&optional input-word)
+(defun lookup-wikipedia (&optional φinput-word)
   "Lookup current word or text selection in Wikipedia.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://en.wikipedia.org/wiki/�" ))
-    (lookup-word-on-internet input-word dictUrl) ) )
+  (let ((ξdictUrl "http://en.wikipedia.org/wiki/�" ))
+    (lookup-word-on-internet φinput-word ξdictUrl) ) )
 
-(defun lookup-word-dict-org (&optional input-word)
+(defun lookup-word-dict-org (&optional φinput-word)
   "Lookup definition of current word or text selection in URL `http://dict.org/'.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ))
-    (lookup-word-on-internet input-word dictUrl)
+  (let ((ξdictUrl "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ))
+    (lookup-word-on-internet φinput-word ξdictUrl)
     ) )
 
-(defun lookup-word-definition (&optional input-word)
+(defun lookup-word-definition (&optional φinput-word)
   "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://www.thefreedictionary.com/�") )
-    (lookup-word-on-internet input-word dictUrl) ) )
+  (let ((ξdictUrl "http://www.thefreedictionary.com/�") )
+    (lookup-word-on-internet φinput-word ξdictUrl) ) )
 
-(defun lookup-answers.com (&optional input-word)
+(defun lookup-answers.com (&optional φinput-word)
   "Lookup current word or text selection in URL `http://answers.com/'.
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://www.answers.com/main/ntquery?s=�"
+  (let ((ξdictUrl "http://www.answers.com/main/ntquery?s=�"
 ) )
-    (lookup-word-on-internet input-word dictUrl) ) )
+    (lookup-word-on-internet φinput-word ξdictUrl) ) )
 
-(defun lookup-wiktionary (&optional input-word)
+(defun lookup-wiktionary (&optional φinput-word)
   "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'
 See also `lookup-word-on-internet'."
   (interactive)
-  (let ((dictUrl "http://en.wiktionary.org/wiki/�" ))
-    (lookup-word-on-internet input-word dictUrl) ) )
+  (let ((ξdictUrl "http://en.wiktionary.org/wiki/�" ))
+    (lookup-word-on-internet φinput-word ξdictUrl) ) )
 
-(defun lookup-all-dictionaries (&optional input-word)
+(defun lookup-all-dictionaries (&optional φinput-word)
   "Lookup definition in many dictionaries.
 Current word or text selection is used as input.
 The dictionaries used are in `all-dictionaries'.
 
 See also `lookup-word-on-internet'."
   (interactive)
-  (mapc (lambda (dictUrl) (lookup-word-on-internet input-word dictUrl)) all-dictionaries) )
+  (mapc (lambda (ξdictUrl) (lookup-word-on-internet φinput-word ξdictUrl)) all-dictionaries) )
 
 (provide 'lookup-word-on-internet)
