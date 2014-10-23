@@ -22,15 +22,11 @@
 
 ;;; REQUIREMENT
 
-;; You need to have 2 elisp util 〔xeu_elisp_util.el〕 and 〔xfrp_find_replace_pairs.el〕, available at
-;; https://github.com/xahlee/xeu_elisp_util.el
-;; https://github.com/xahlee/xfrp_find_replace_pairs.el
+;; none
 
 ;;; INSTALL
 
 ;; To install, place this file 〔lookup-word-on-internet.el〕 in the directory 〔~/.emacs.d/lisp/〕.
-
-;; also place the files 〔xeu_elisp_util.el〕 and 〔xfrp_find_replace_pairs.el〕 in 〔~/.emacs.d/lisp/〕, if you haven't done already.
 
 ;; Then, place the following code in your emacs init file
 
