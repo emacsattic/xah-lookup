@@ -1,0 +1,4 @@
+A emacs lisp package for looking up Google, Dictionaries, Wikipedia, or programing reference sites.
+
+Home page
+http://ergoemacs.org/emacs/emacs_lookup_ref.html
