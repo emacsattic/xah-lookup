@@ -14,8 +14,7 @@
 
 ;;; Commentary:
 
-;; this package provides convenient commands for looking up the web.
-;; The commands are:
+;; This package provides convenient commands for looking up the web.
 
 ;; xah-lookup-word-on-internet
 ;; xah-lookup-google
@@ -44,7 +43,7 @@
 ;; (autoload 'xah-lookup-word-definition "xah-lookup-word-on-internet" "Lookup in browser" t)
 ;; (autoload 'xah-lookup-wiktionary "xah-lookup-word-on-internet" "Lookup word in browser" t)
 
-;;; HISTORY
+;;; HISTORY:
 
 ;; 2014-10-20 changes are no longer logged here, unless major.
 ;; version 1.5, 2013-04-21 removed xah-lookup-php-ref. Doesn't belong here.
@@ -54,21 +53,26 @@
 ;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=�」 to 「http://www.thefreedictionary.com/�」.
 ;; version 1.0, 2011-11-14 First released to public.
 
+
 ;;; Code:
 
-
-
 (require 'browse-url)
+(require 'eww "eww.el" 'NOERROR)
+
+(defvar xah-lookup-use-browser nil "Specify which function to call to launch browser. Default is 'browse-url. You can also use 'eww.")
+(setq xah-lookup-use-browser 'browse-url)
 
 (defvar xah-lookup-dictionary-list nil "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
-(setq xah-lookup-dictionary-list [
-"http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ; 1913 Webster, WordNet
-"http://www.thefreedictionary.com/�"                         ; AHD
-"http://www.answers.com/main/ntquery?s=�"                    ; AHD
-"http://en.wiktionary.org/wiki/�"
-"http://www.google.com/search?q=define:+�" ; google
-"http://www.etymonline.com/index.php?search=�" ; etymology
-] )
+(setq
+ xah-lookup-dictionary-list
+ [
+  "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ; 1913 Webster, WordNet
+  "http://www.thefreedictionary.com/�"                         ; AHD
+  "http://www.answers.com/main/ntquery?s=�"                    ; AHD
+  "http://en.wiktionary.org/wiki/�"
+  "http://www.google.com/search?q=define:+�"   ; google
+  "http://www.etymonline.com/index.php?search=�" ; etymology
+  ] )
 
 (defun xah-lookup--asciify-region (&optional φfrom φto)
   "Change some Unicode characters into equivalent ASCII ones.
@@ -143,13 +147,14 @@ For a list of online reference sites, see:
             "http://www.google.com/search?q=�" ))
 
     (setq ξmyUrl (replace-regexp-in-string "�" ξword ξrefUrl t t))
+
     (cond
      ((string-equal system-type "windows-nt") ; any flavor of Windows
-      (browse-url-default-windows-browser ξmyUrl))
+      (funcall xah-lookup-use-browser ξmyUrl))
      ((string-equal system-type "gnu/linux")
-      (eww ξmyUrl))
+      (funcall xah-lookup-use-browser ξmyUrl))
      ((string-equal system-type "darwin") ; Mac
-      (browse-url ξmyUrl)))))
+      (funcall xah-lookup-use-browser ξmyUrl)))))
 
 (defun xah-lookup-google (&optional φword)
   "Lookup current word or text selection in Google Search.
@@ -210,10 +215,12 @@ See also `xah-lookup-word-on-internet'."
    (lambda
      (ξurl)
      (xah-lookup-word-on-internet φword ξurl))
-   xah-lookup-dictionary-list) )
+   xah-lookup-dictionary-list))
 
 (define-key help-map (kbd "7") 'xah-lookup-google)
 (define-key help-map (kbd "8") 'xah-lookup-wikipedia)
-(define-key help-map (kbd "9") 'xah-lookup-wikipedia)
+(define-key help-map (kbd "9") 'xah-lookup-word-definition)
 
 (provide 'xah-lookup-word-on-internet)
+
+;;; xah-lookup-word-on-internet.el ends here
