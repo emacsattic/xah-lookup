@@ -14,7 +14,7 @@
 
 ;;; Commentary:
 
-;; This package provides convenient commands for looking up the web.
+;; This package provide commands for looking up the web.
 
 ;; xah-lookup-word-on-internet
 ;; xah-lookup-google
@@ -43,6 +43,9 @@
 ;; (autoload 'xah-lookup-word-definition "xah-lookup-word-on-internet" "Lookup in browser" t)
 ;; (autoload 'xah-lookup-wiktionary "xah-lookup-word-on-internet" "Lookup word in browser" t)
 
+;; if you prefer to use emacs's eww browser, add the following
+;; (setq xah-lookup-use-browser 'eww)
+
 ;;; HISTORY:
 
 ;; 2014-10-20 changes are no longer logged here, unless major.
@@ -56,7 +59,7 @@
 
 ;;; Code:
 
-(require 'browse-url)
+(require 'browse-url) ; in emacs
 (require 'eww "eww.el" 'NOERROR)
 
 (defvar xah-lookup-use-browser nil "Specify which function to call to launch browser. Default is 'browse-url. You can also use 'eww.")
