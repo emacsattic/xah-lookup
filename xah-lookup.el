@@ -153,11 +153,11 @@ For a list of online reference sites, see:
 
     (cond
      ((string-equal system-type "windows-nt") ; any flavor of Windows
-      (funcall xah-lookup-use-browser ξmyUrl))
+      (funcall xah-lookup-browser-function ξmyUrl))
      ((string-equal system-type "gnu/linux")
-      (funcall xah-lookup-use-browser ξmyUrl))
+      (funcall xah-lookup-browser-function ξmyUrl))
      ((string-equal system-type "darwin") ; Mac
-      (funcall xah-lookup-use-browser ξmyUrl)))))
+      (funcall xah-lookup-browser-function ξmyUrl)))))
 
 (defun xah-lookup-google (&optional φword)
   "Lookup current word or text selection in Google Search.
