@@ -43,7 +43,7 @@
 ;; (autoload 'xah-lookup-word-definition "xah-lookup" "Lookup in browser" t)
 ;; (autoload 'xah-lookup-wiktionary "xah-lookup" "Lookup in browser" t)
 
-;; if you prefer to use emacs's eww browser, add the following
+;; If you prefer to use emacs's eww browser, add the following
 ;; (require 'eww)
 ;; (setq xah-lookup-browser-function 'eww)
 
@@ -159,49 +159,46 @@ For a list of online reference sites, see:
      ((string-equal system-type "darwin") ; Mac
       (funcall xah-lookup-browser-function ξmyUrl)))))
 
+;;;###autoload
 (defun xah-lookup-google (&optional φword)
-  "Lookup current word or text selection in Google Search.
-See also `xah-lookup-word-on-internet'."
+  "Lookup current word or text selection in Google Search."
   (interactive)
   (xah-lookup-word-on-internet
    φword
    "http://www.google.com/search?q=�") )
 
+;;;###autoload
 (defun xah-lookup-wikipedia (&optional φword)
-  "Lookup current word or text selection in Wikipedia.
-See also `xah-lookup-word-on-internet'."
+  "Lookup current word or text selection in Wikipedia."
   (interactive)
   (xah-lookup-word-on-internet
    φword
    "http://en.wikipedia.org/wiki/�") )
 
+;;;###autoload
 (defun xah-lookup-word-definition (&optional φword)
-  "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'.
-See also `xah-lookup-word-on-internet'."
+  "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'."
   (interactive)
   (xah-lookup-word-on-internet
    φword
    "http://www.thefreedictionary.com/�") )
 
 (defun xah-lookup-word-dict-org (&optional φword)
-  "Lookup definition of current word or text selection in URL `http://dict.org/'.
-See also `xah-lookup-word-on-internet'."
+  "Lookup definition of current word or text selection in URL `http://dict.org/'."
   (interactive)
   (xah-lookup-word-on-internet
    φword
    "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�"))
 
 (defun xah-lookup-answers.com (&optional φword)
-  "Lookup current word or text selection in URL `http://answers.com/'.
-See also `xah-lookup-word-on-internet'."
+  "Lookup current word or text selection in URL `http://answers.com/'."
   (interactive)
   (xah-lookup-word-on-internet
    φword
    "http://www.answers.com/main/ntquery?s=�"))
 
 (defun xah-lookup-wiktionary (&optional φword)
-  "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'
-See also `xah-lookup-word-on-internet'."
+  "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'"
   (interactive)
   (xah-lookup-word-on-internet
    φword
@@ -210,9 +207,7 @@ See also `xah-lookup-word-on-internet'."
 (defun xah-lookup-all-dictionaries (&optional φword)
   "Lookup definition in many dictionaries.
 Current word or text selection is used as input.
-The dictionaries used are in `xah-lookup-dictionary-list'.
-
-See also `xah-lookup-word-on-internet'."
+The dictionaries used are in `xah-lookup-dictionary-list'."
   (interactive)
   (mapc
    (lambda
