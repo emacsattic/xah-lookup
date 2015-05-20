@@ -3,28 +3,39 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.0.1
+;; Version: 2.0.2
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
-;; Homepage: http://ergoemacs.org/emacs/emacs_lookup_ref.html
+;; URL: http://ergoemacs.org/emacs/emacs_lookup_ref.html
 
 ;; This file is not part of GNU Emacs.
 
-;; You can redistribute this program and/or modify it. Please give credit and link. Thanks.
+;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 2.
 
 ;;; Commentary:
 
-;; This package provide commands for looking up the web.
+;; This package provide commands for looking up the web of word under cursor.
 
 ;; xah-lookup-word-on-internet
-;; xah-lookup-google           ; (C-h 7)
-;; xah-lookup-wikipedia        ; (C-h 8)
-;; xah-lookup-word-definition  ; (C-h 9)
+;; xah-lookup-google           ; 【C-h 7】 or 【F1 7】
+;; xah-lookup-wikipedia        ; 【C-h 8】 or 【F1 8】
+;; xah-lookup-word-definition  ; 【C-h 9】 or 【F1 9】
 ;; xah-lookup-word-dict-org
 ;; xah-lookup-answers.com
 ;; xah-lookup-wiktionary
 
-;; Homepage: http://ergoemacs.org/emacs/emacs_lookup_ref.html
+;; If there's a text selection (a phrase you want to lookup), these commands will act on the selection.
+
+;; If you prefer to use emacs 24.4's builtin eww browser, put the following in your emacs init
+;; (require 'eww)
+;; (setq xah-lookup-browser-function 'eww)
+
+;; To change the default key, put the following in your emacs init.
+;; (define-key help-map (kbd "7") 'xah-lookup-google)
+;; Change the command to the one you want, or `nil' to reset.
+
+;; You can also create your own lookup command to lookup perl, ruby, php, clojure, etc.
+;; See: http://ergoemacs.org/emacs/emacs_lookup_ref.html
 
 ;; Like it?
 ;; Buy Xah Emacs Tutorial
@@ -42,10 +53,6 @@
 ;; (autoload 'xah-lookup-word-dict-org "xah-lookup" "Lookup in browser" t)
 ;; (autoload 'xah-lookup-word-definition "xah-lookup" "Lookup in browser" t)
 ;; (autoload 'xah-lookup-wiktionary "xah-lookup" "Lookup in browser" t)
-
-;; If you prefer to use emacs's eww browser, add the following
-;; (require 'eww)
-;; (setq xah-lookup-browser-function 'eww)
 
 ;;; HISTORY:
 
