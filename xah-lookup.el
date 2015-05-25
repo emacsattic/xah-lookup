@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.0.2
+;; Version: 2.1.0
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
 ;; URL: http://ergoemacs.org/emacs/emacs_lookup_ref.html
@@ -30,7 +30,10 @@
 ;; (require 'eww)
 ;; (setq xah-lookup-browser-function 'eww)
 
-;; To change the default key, put the following in your emacs init.
+;; For commands that lookup english word definition, the default is eww browser, if available. You can change it by
+;; (setq xah-lookup-dictionary-browser-function 'browse-url)
+
+;; To change/add keys, put the following in your emacs init.
 ;; (define-key help-map (kbd "7") 'xah-lookup-google)
 ;; Change the command to the one you want, or `nil' to reset.
 
@@ -69,20 +72,35 @@
 
 (require 'browse-url) ; in emacs
 
-(defvar xah-lookup-browser-function nil "Specify which function to call to launch browser. Default is 'browse-url. You can also use 'eww.")
-(setq xah-lookup-browser-function 'browse-url)
+(defcustom
+  xah-lookup-browser-function
+  'browse-url
+  "Specify which function to call to launch browser. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
+  :group 'xah-lookup
+  )
 
-(defvar xah-lookup-dictionary-list nil "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
-(setq
- xah-lookup-dictionary-list
- [
-  "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ; 1913 Webster, WordNet
-  "http://www.thefreedictionary.com/�"                         ; AHD
-  "http://www.answers.com/main/ntquery?s=�"                    ; AHD
-  "http://en.wiktionary.org/wiki/�"
-  "http://www.google.com/search?q=define:+�"   ; google
-  "http://www.etymonline.com/index.php?search=�" ; etymology
-  ] )
+(defcustom
+ xah-lookup-dictionary-browser-function
+ (if (fboundp 'eww)
+     (progn
+       (require 'eww)
+       'eww
+       )
+   'browse-url
+   )
+ "Function to call to launch browser for English definition lookup. Default is eww if available, else 'browse-url.")
+
+(defcustom
+  xah-lookup-dictionary-list
+  [
+   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ; 1913 Webster, WordNet
+   "http://www.thefreedictionary.com/�"                         ; AHD
+   "http://www.answers.com/main/ntquery?s=�"                    ; AHD
+   "http://en.wiktionary.org/wiki/�"
+   "http://www.google.com/search?q=define:+�"    ; google
+   "http://www.etymonline.com/index.php?search=�" ; etymology
+   ]
+  "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
 
 (defun xah-lookup--asciify-region (&optional φfrom φto)
   "Change some Unicode characters into equivalent ASCII ones.
@@ -129,7 +147,7 @@ Version 2014-10-20"
       (xah-lookup--asciify-region (point-min) (point-max))
       (buffer-string)))
 
-(defun xah-lookup-word-on-internet (&optional φword φsite-to-use)
+(defun xah-lookup-word-on-internet (&optional φword φsite-to-use φbrowser-function)
   "Look up current word or text selection in a online reference site.
 This command launches/switches you to default browser.
 
@@ -158,13 +176,9 @@ For a list of online reference sites, see:
 
     (setq ξmyUrl (replace-regexp-in-string "�" ξword ξrefUrl t t))
 
-    (cond
-     ((string-equal system-type "windows-nt") ; any flavor of Windows
-      (funcall xah-lookup-browser-function ξmyUrl))
-     ((string-equal system-type "gnu/linux")
-      (funcall xah-lookup-browser-function ξmyUrl))
-     ((string-equal system-type "darwin") ; Mac
-      (funcall xah-lookup-browser-function ξmyUrl)))))
+    (if (null φbrowser-function)
+        (funcall xah-lookup-browser-function ξmyUrl)
+      (funcall φbrowser-function ξmyUrl))))
 
 ;;;###autoload
 (defun xah-lookup-google (&optional φword)
@@ -188,28 +202,32 @@ For a list of online reference sites, see:
   (interactive)
   (xah-lookup-word-on-internet
    φword
-   "http://www.thefreedictionary.com/�") )
+   "http://www.thefreedictionary.com/�"
+   xah-lookup-dictionary-browser-function) )
 
 (defun xah-lookup-word-dict-org (&optional φword)
   "Lookup definition of current word or text selection in URL `http://dict.org/'."
   (interactive)
   (xah-lookup-word-on-internet
    φword
-   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�"))
+   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�"
+   xah-lookup-dictionary-browser-function))
 
 (defun xah-lookup-answers.com (&optional φword)
   "Lookup current word or text selection in URL `http://answers.com/'."
   (interactive)
   (xah-lookup-word-on-internet
    φword
-   "http://www.answers.com/main/ntquery?s=�"))
+   "http://www.answers.com/main/ntquery?s=�"
+   xah-lookup-dictionary-browser-function))
 
 (defun xah-lookup-wiktionary (&optional φword)
   "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'"
   (interactive)
   (xah-lookup-word-on-internet
    φword
-   "http://en.wiktionary.org/wiki/�"))
+   "http://en.wiktionary.org/wiki/�"
+   xah-lookup-dictionary-browser-function))
 
 (defun xah-lookup-all-dictionaries (&optional φword)
   "Lookup definition in many dictionaries.
@@ -219,7 +237,7 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
   (mapc
    (lambda
      (ξurl)
-     (xah-lookup-word-on-internet φword ξurl))
+     (xah-lookup-word-on-internet φword ξurl xah-lookup-dictionary-browser-function))
    xah-lookup-dictionary-list))
 
 (define-key help-map (kbd "7") 'xah-lookup-google)
