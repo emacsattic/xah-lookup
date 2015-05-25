@@ -80,15 +80,16 @@
   )
 
 (defcustom
- xah-lookup-dictionary-browser-function
- (if (fboundp 'eww)
-     (progn
-       (require 'eww)
-       'eww
-       )
-   'browse-url
-   )
- "Function to call to launch browser for English definition lookup. Default is eww if available, else 'browse-url.")
+  xah-lookup-dictionary-browser-function
+  (if (fboundp 'eww)
+      (progn
+        (require 'eww)
+        'eww
+        )
+    'browse-url
+    )
+  "Function to call to launch browser for English definition lookup. Default is eww if available, else 'browse-url."
+  :group 'xah-lookup)
 
 (defcustom
   xah-lookup-dictionary-list
@@ -97,10 +98,11 @@
    "http://www.thefreedictionary.com/�"                         ; AHD
    "http://www.answers.com/main/ntquery?s=�"                    ; AHD
    "http://en.wiktionary.org/wiki/�"
-   "http://www.google.com/search?q=define:+�"    ; google
+   "http://www.google.com/search?q=define:+�"     ; google
    "http://www.etymonline.com/index.php?search=�" ; etymology
    ]
-  "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html ")
+  "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html "
+  :group 'xah-lookup)
 
 (defun xah-lookup--asciify-region (&optional φfrom φto)
   "Change some Unicode characters into equivalent ASCII ones.
