@@ -75,20 +75,14 @@
 (defcustom
   xah-lookup-browser-function
   'browse-url
-  "Specify which function to call to launch browser. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
+  "Function to call to launch browser. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
   :group 'xah-lookup
   )
 
 (defcustom
   xah-lookup-dictionary-browser-function
-  (if (fboundp 'eww)
-      (progn
-        (require 'eww)
-        'eww
-        )
-    'browse-url
-    )
-  "Function to call to launch browser for English definition lookup. Default is eww if available, else 'browse-url."
+  'browse-url
+  "Function to call for English definition lookup. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
   :group 'xah-lookup)
 
 (defcustom
