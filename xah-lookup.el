@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.1.0
+;; Version: 2.1.1
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
 ;; URL: http://ergoemacs.org/emacs/emacs_lookup_ref.html
@@ -28,10 +28,10 @@
 
 ;; If you prefer to use emacs 24.4's builtin eww browser, put the following in your emacs init
 ;; (require 'eww)
-;; (setq xah-lookup-browser-function 'eww)
+;; (setq xah-lookup-browser-function 'eww) ; or 'browse-url
 
-;; For commands that lookup english word definition, the default is eww browser, if available. You can change it by
-;; (setq xah-lookup-dictionary-browser-function 'browse-url)
+;; For commands that lookup English word definition, you can specify browser separately.
+;; (setq xah-lookup-dictionary-browser-function 'eww) ; or 'browse-url
 
 ;; To change/add keys, put the following in your emacs init.
 ;; (define-key help-map (kbd "7") 'xah-lookup-google)
