@@ -242,4 +242,8 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 
 (provide 'xah-lookup)
 
+;; Local Variables:
+;; coding: utf-8
+;; End:
+
 ;;; xah-lookup.el ends here
