@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.1.1
+;; Version: 2.1.2
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
 ;; URL: http://ergoemacs.org/emacs/emacs_lookup_ref.html
@@ -98,7 +98,7 @@
   "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html "
   :group 'xah-lookup)
 
-(defun xah-lookup--asciify-region (&optional φfrom φto)
+(defun xah-lookup--asciify-region (&optional *from *to)
   "Change some Unicode characters into equivalent ASCII ones.
 For example, “passé” becomes “passe”.
 
@@ -112,12 +112,12 @@ Version 2014-10-20"
      (list (line-beginning-position) (line-end-position))))
   (let ((case-fold-search t))
     (save-restriction
-      (narrow-to-region φfrom φto)
+      (narrow-to-region *from *to)
       (mapc
-       (lambda (ξpair)
+       (lambda (-pair)
          (goto-char (point-min))
-         (while (search-forward-regexp (elt ξpair 0) (point-max) t)
-           (replace-match (elt ξpair 1))))
+         (while (search-forward-regexp (elt -pair 0) (point-max) t)
+           (replace-match (elt -pair 1))))
        [
         ["á\\|à\\|â\\|ä\\|ã\\|å" "a"]
         ["é\\|è\\|ê\\|ë" "e"]
@@ -133,107 +133,107 @@ Version 2014-10-20"
         ["æ" "ae"]
         ]))))
 
-(defun xah-lookup--asciify-string (φstring)
+(defun xah-lookup--asciify-string (*string)
   "Change some Unicode characters into equivalent ASCII ones.
 For example, “passé” becomes “passe”.
 See `xah-lookup--asciify-region'
 Version 2014-10-20"
   (with-temp-buffer
-      (insert φstring)
+      (insert *string)
       (xah-lookup--asciify-region (point-min) (point-max))
       (buffer-string)))
 
-(defun xah-lookup-word-on-internet (&optional φword φsite-to-use φbrowser-function)
+(defun xah-lookup-word-on-internet (&optional *word *site-to-use *browser-function)
   "Look up current word or text selection in a online reference site.
 This command launches/switches you to default browser.
 
-ΦSITE-TO-USE a is URL string in this form: 「http://en.wiktionary.org/wiki/�」.
+*SITE-TO-USE a is URL string in this form: 「http://en.wiktionary.org/wiki/�」.
 the 「�」 is a placeholder for the query string.
 
-If ΦSITE-TO-USE is nil, Google Search is used.
+If *SITE-TO-USE is nil, Google Search is used.
 
 For a list of online reference sites, see:
  URL `http://ergoemacs.org/emacs/emacs_lookup_ref.html'"
   (interactive)
-  (let (ξword ξrefUrl ξmyUrl)
-    (setq ξword
-          (if φword
-              φword
+  (let (-word -refUrl -myUrl)
+    (setq -word
+          (if *word
+              *word
             (if (region-active-p)
                 (buffer-substring-no-properties (region-beginning) (region-end))
               (thing-at-point 'symbol))))
 
-    (setq ξword (replace-regexp-in-string " " "%20" (xah-lookup--asciify-string ξword)))
+    (setq -word (replace-regexp-in-string " " "%20" (xah-lookup--asciify-string -word)))
 
-    (setq ξrefUrl
-          (if φsite-to-use
-              φsite-to-use
+    (setq -refUrl
+          (if *site-to-use
+              *site-to-use
             "http://www.google.com/search?q=�" ))
 
-    (setq ξmyUrl (replace-regexp-in-string "�" ξword ξrefUrl t t))
+    (setq -myUrl (replace-regexp-in-string "�" -word -refUrl t t))
 
-    (if (null φbrowser-function)
-        (funcall xah-lookup-browser-function ξmyUrl)
-      (funcall φbrowser-function ξmyUrl))))
+    (if (null *browser-function)
+        (funcall xah-lookup-browser-function -myUrl)
+      (funcall *browser-function -myUrl))))
 
 ;;;###autoload
-(defun xah-lookup-google (&optional φword)
+(defun xah-lookup-google (&optional *word)
   "Lookup current word or text selection in Google Search."
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://www.google.com/search?q=�") )
 
 ;;;###autoload
-(defun xah-lookup-wikipedia (&optional φword)
+(defun xah-lookup-wikipedia (&optional *word)
   "Lookup current word or text selection in Wikipedia."
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://en.wikipedia.org/wiki/�") )
 
 ;;;###autoload
-(defun xah-lookup-word-definition (&optional φword)
+(defun xah-lookup-word-definition (&optional *word)
   "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'."
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://www.thefreedictionary.com/�"
    xah-lookup-dictionary-browser-function) )
 
-(defun xah-lookup-word-dict-org (&optional φword)
+(defun xah-lookup-word-dict-org (&optional *word)
   "Lookup definition of current word or text selection in URL `http://dict.org/'."
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�"
    xah-lookup-dictionary-browser-function))
 
-(defun xah-lookup-answers.com (&optional φword)
+(defun xah-lookup-answers.com (&optional *word)
   "Lookup current word or text selection in URL `http://answers.com/'."
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://www.answers.com/main/ntquery?s=�"
    xah-lookup-dictionary-browser-function))
 
-(defun xah-lookup-wiktionary (&optional φword)
+(defun xah-lookup-wiktionary (&optional *word)
   "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'"
   (interactive)
   (xah-lookup-word-on-internet
-   φword
+   *word
    "http://en.wiktionary.org/wiki/�"
    xah-lookup-dictionary-browser-function))
 
-(defun xah-lookup-all-dictionaries (&optional φword)
+(defun xah-lookup-all-dictionaries (&optional *word)
   "Lookup definition in many dictionaries.
 Current word or text selection is used as input.
 The dictionaries used are in `xah-lookup-dictionary-list'."
   (interactive)
   (mapc
    (lambda
-     (ξurl)
-     (xah-lookup-word-on-internet φword ξurl xah-lookup-dictionary-browser-function))
+     (-url)
+     (xah-lookup-word-on-internet *word -url xah-lookup-dictionary-browser-function))
    xah-lookup-dictionary-list))
 
 (define-key help-map (kbd "7") 'xah-lookup-google)
