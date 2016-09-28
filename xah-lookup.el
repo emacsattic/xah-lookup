@@ -3,10 +3,10 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.1.2
+;; Version: 2.1.3
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
-;; URL: http://ergoemacs.org/emacs/emacs_lookup_ref.html
+;; URL: http://ergoemacs.org/emacs/xah-lookup.html
 
 ;; This file is not part of GNU Emacs.
 
@@ -38,7 +38,7 @@
 ;; Change the command to the one you want, or `nil' to reset.
 
 ;; You can also create your own lookup command to lookup perl, ruby, php, clojure, etc.
-;; See: http://ergoemacs.org/emacs/emacs_lookup_ref.html
+;; See: http://ergoemacs.org/emacs/xah-lookup.html
 
 ;; Like it?
 ;; Buy Xah Emacs Tutorial
@@ -153,7 +153,7 @@ the 「�」 is a placeholder for the query string.
 If *SITE-TO-USE is nil, Google Search is used.
 
 For a list of online reference sites, see:
- URL `http://ergoemacs.org/emacs/emacs_lookup_ref.html'"
+ URL `http://ergoemacs.org/emacs/xah-lookup.html'"
   (interactive)
   (let (-word -refUrl -myUrl)
     (setq -word
@@ -161,7 +161,7 @@ For a list of online reference sites, see:
               *word
             (if (region-active-p)
                 (buffer-substring-no-properties (region-beginning) (region-end))
-              (thing-at-point 'symbol))))
+              (current-word))))
 
     (setq -word (replace-regexp-in-string " " "%20" (xah-lookup--asciify-string -word)))
 
