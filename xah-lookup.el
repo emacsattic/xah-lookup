@@ -1,10 +1,11 @@
-;;; xah-lookup.el --- look up word on internet
+;;; xah-lookup.el --- look up word on internet. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2011-2015 by Xah Lee
+;; Copyright © 2011-2016 by Xah Lee
 
-;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.1.3
+;; Author: Xah Lee ( http://xahlee.info/ )
+;; Version: 2.1.5
 ;; Created: 14 Nov 2011
+;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
 ;; URL: http://ergoemacs.org/emacs/xah-lookup.html
 
@@ -241,9 +242,5 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 (define-key help-map (kbd "9") 'xah-lookup-word-definition)
 
 (provide 'xah-lookup)
-
-;; Local Variables:
-;; coding: utf-8
-;; End:
 
 ;;; xah-lookup.el ends here
