@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.0.0
+;; Version: 3.0.1
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -204,7 +204,7 @@ Version 2017-02-09"
    (get 'xah-lookup-google 'xah-lookup-browser-function )))
 
 (put 'xah-lookup-google 'xah-lookup-url "http://www.google.com/search?q=word02051")
-(put 'xah-lookup-google 'xah-lookup-browser-function 'browse-url)
+(put 'xah-lookup-google 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
 (defun xah-lookup-wikipedia (&optional *word)
@@ -217,7 +217,7 @@ Version 2017-02-09"
    (get 'xah-lookup-wikipedia 'xah-lookup-browser-function )))
 
 (put 'xah-lookup-wikipedia 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
-(put 'xah-lookup-wikipedia 'xah-lookup-browser-function 'browse-url)
+(put 'xah-lookup-wikipedia 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
 (defun xah-lookup-word-definition (&optional *word)
@@ -254,7 +254,7 @@ Version 2017-02-09"
    (get 'xah-lookup-answers.com 'xah-lookup-browser-function )))
 
 (put 'xah-lookup-answers.com 'xah-lookup-url "http://www.answers.com/main/ntquery?s=word02051")
-(put 'xah-lookup-answers.com 'xah-lookup-browser-function 'browse-url)
+(put 'xah-lookup-answers.com 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-wiktionary (&optional *word)
   "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'
@@ -266,7 +266,7 @@ Version 2017-02-09"
    (get 'xah-lookup-wiktionary 'xah-lookup-browser-function )))
 
 (put 'xah-lookup-wiktionary 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
-(put 'xah-lookup-wiktionary 'xah-lookup-browser-function 'browse-url)
+(put 'xah-lookup-wiktionary 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-all-dictionaries (&optional *word)
   "Lookup definition in many dictionaries.
