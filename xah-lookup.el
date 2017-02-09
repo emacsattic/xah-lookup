@@ -229,7 +229,7 @@ Version 2017-02-09"
    (get 'xah-lookup-word-definition 'xah-lookup-url )
    (get 'xah-lookup-word-definition 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/word02051")
+(put 'xah-lookup-word-definition 'xah-lookup-url "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=word02051")
 (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-word-dict-org (&optional *word)
