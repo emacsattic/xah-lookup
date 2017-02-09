@@ -1,9 +1,9 @@
 ;;; xah-lookup.el --- look up word on internet. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2011-2016 by Xah Lee
+;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.1.5
+;; Version: 3.0.0
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -17,55 +17,74 @@
 
 ;; This package provide commands for looking up the web of word under cursor.
 
-;; xah-lookup-word-on-internet
-;; xah-lookup-google           ; 【C-h 7】 or 【F1 7】
-;; xah-lookup-wikipedia        ; 【C-h 8】 or 【F1 8】
-;; xah-lookup-word-definition  ; 【C-h 9】 or 【F1 9】
-;; xah-lookup-word-dict-org
-;; xah-lookup-answers.com
-;; xah-lookup-wiktionary
+;; • xah-lookup-word-on-internet
+;; • xah-lookup-google           ; 【C-h 7】
+;; • xah-lookup-wikipedia        ; 【C-h 8】
+;; • xah-lookup-word-definition  ; 【C-h 9】
+;; • xah-lookup-word-dict-org
+;; • xah-lookup-answers.com
+;; • xah-lookup-wiktionary
 
-;; If there's a text selection (a phrase you want to lookup), these commands will act on the selection.
+;; If there's a text selection (a phrase you want to lookup), these commands will lookup the selected text.
+
+;;; INSTALL:
+
+;; To install manually, place this file xah-lookup.el in the directory ~/.emacs.d/lisp/
+
+;; Then, place the following code in your emacs init file
+
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (require 'xah-lookup)
+
+;;; CUSTOMIZATION
 
 ;; If you prefer to use emacs 24.4's builtin eww browser, put the following in your emacs init
+;; (require 'xah-lookup)
 ;; (require 'eww)
-;; (setq xah-lookup-browser-function 'eww) ; or 'browse-url
+;; (setq xah-lookup-browser-function 'eww)
 
-;; For commands that lookup English word definition, you can specify browser separately.
-;; (setq xah-lookup-dictionary-browser-function 'eww) ; or 'browse-url
+;; for operating system's default browser, use 'browse-url instead of 'eww
 
-;; To change/add keys, put the following in your emacs init.
-;; (define-key help-map (kbd "7") 'xah-lookup-google)
-;; Change the command to the one you want, or `nil' to reset.
+;; Each command can use a different URL or browser. For example:
+;; (require 'xah-lookup)
+;; (require 'eww)
+;; (put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/word02051")
+;; (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
 
-;; You can also create your own lookup command to lookup perl, ruby, php, clojure, etc.
+;; To change/add keys, put the following in your emacs init. For example:
+;; (define-key help-map (kbd "7") 'xah-lookup-google) ; C-h 7
+;; or
+;; (global-set-key (kbd "<f2>") 'xah-lookup-word-definition) ; F2
+
+;; You can also create your own lookup command to lookup ruby, php, clojure, etc.
+;; For example:
+
+;; (defun my-lookup-php (&optional *word)
+;;   "lookup php doc of word under cursor"
+;;   (interactive)
+;;   (require 'xah-lookup)
+;;   (xah-lookup-word-on-internet
+;;    *word
+;;    (get 'my-lookup-php 'xah-lookup-url )
+;;    (get 'my-lookup-php 'xah-lookup-browser-function )))
+;; (put 'my-lookup-php 'xah-lookup-url "http://us.php.net/word02051")
+;; (put 'my-lookup-php 'xah-lookup-browser-function 'browse-url)
+
 ;; See: http://ergoemacs.org/emacs/xah-lookup.html
 
 ;; Like it?
 ;; Buy Xah Emacs Tutorial
 ;; http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html
 
-;;; INSTALL:
-
-;; To install manually, place this file 〔xah-lookup.el〕 in the directory 〔~/.emacs.d/lisp/〕.
-
-;; Then, place the following code in your emacs init file
-
-;; (add-to-list 'load-path "~/.emacs.d/lisp/")
-;; (autoload 'xah-lookup-google "xah-lookup" "Lookup in browser" t)
-;; (autoload 'xah-lookup-wikipedia "xah-lookup" "Lookup in browser" t)
-;; (autoload 'xah-lookup-word-dict-org "xah-lookup" "Lookup in browser" t)
-;; (autoload 'xah-lookup-word-definition "xah-lookup" "Lookup in browser" t)
-;; (autoload 'xah-lookup-wiktionary "xah-lookup" "Lookup in browser" t)
-
 ;;; HISTORY:
 
+;; 2017-02-09 each command can be costomized for lookup URL and browser to use.
 ;; 2014-10-20 changes are no longer logged here, unless major.
 ;; version 1.5, 2013-04-21 removed xah-lookup-php-ref. Doesn't belong here.
 ;; version 1.4, 2013-03-23 added 2 more dict to the xah-lookup-dictionary-list. Good for vocabulary researchers
 ;; version 1.3, 2012-05-11 added “xah-lookup-xah-lookup-dictionary-list”.
 ;; version 1.2, 2012-05-10 added “xah-lookup-answers.com”. Improved inline docs.
-;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=�」 to 「http://www.thefreedictionary.com/�」.
+;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=word02051」 to 「http://www.thefreedictionary.com/word02051」.
 ;; version 1.0, 2011-11-14 First released to public.
 
 
@@ -89,14 +108,14 @@
 (defcustom
   xah-lookup-dictionary-list
   [
-   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�" ; 1913 Webster, WordNet
-   "http://www.thefreedictionary.com/�"                         ; AHD
-   "http://www.answers.com/main/ntquery?s=�"                    ; AHD
-   "http://en.wiktionary.org/wiki/�"
-   "http://www.google.com/search?q=define:+�"     ; google
-   "http://www.etymonline.com/index.php?search=�" ; etymology
+   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=word02051" ; 1913 Webster, WordNet
+   "http://www.thefreedictionary.com/word02051"                         ; AHD
+   "http://www.answers.com/main/ntquery?s=word02051"                    ; AHD
+   "http://en.wiktionary.org/wiki/word02051"
+   "http://www.google.com/search?q=define:+word02051"     ; google
+   "http://www.etymonline.com/index.php?search=word02051" ; etymology
    ]
-  "A vector of dictionaries. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html "
+  "A vector of website URLs for lookup words. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html "
   :group 'xah-lookup)
 
 (defun xah-lookup--asciify-region (&optional *from *to)
@@ -144,17 +163,18 @@ Version 2014-10-20"
       (xah-lookup--asciify-region (point-min) (point-max))
       (buffer-string)))
 
-(defun xah-lookup-word-on-internet (&optional *word *site-to-use *browser-function)
+(defun xah-lookup-word-on-internet (&optional *word *url *browser-function)
   "Look up current word or text selection in a online reference site.
 This command launches/switches you to default browser.
 
-*SITE-TO-USE a is URL string in this form: 「http://en.wiktionary.org/wiki/�」.
-the 「�」 is a placeholder for the query string.
+*URL a is URL string in this form: 「http://en.wiktionary.org/wiki/word02051」.
+the 「word02051」 is a placeholder for the query string.
 
-If *SITE-TO-USE is nil, Google Search is used.
+If *URL is nil, Google Search is used.
 
 For a list of online reference sites, see:
- URL `http://ergoemacs.org/emacs/xah-lookup.html'"
+ URL `http://ergoemacs.org/emacs/xah-lookup.html'
+Version 2017-02-09"
   (interactive)
   (let (-word -refUrl -myUrl)
     (setq -word
@@ -163,68 +183,90 @@ For a list of online reference sites, see:
             (if (region-active-p)
                 (buffer-substring-no-properties (region-beginning) (region-end))
               (current-word))))
-
     (setq -word (replace-regexp-in-string " " "%20" (xah-lookup--asciify-string -word)))
-
     (setq -refUrl
-          (if *site-to-use
-              *site-to-use
-            "http://www.google.com/search?q=�" ))
-
-    (setq -myUrl (replace-regexp-in-string "�" -word -refUrl t t))
-
-    (if (null *browser-function)
-        (funcall xah-lookup-browser-function -myUrl)
-      (funcall *browser-function -myUrl))))
+          (if *url
+              *url
+            "http://www.google.com/search?q=word02051" ))
+    (setq -myUrl (replace-regexp-in-string "word02051" -word -refUrl t t))
+    (if *browser-function
+        (funcall *browser-function -myUrl)
+      (funcall xah-lookup-browser-function -myUrl))))
 
 ;;;###autoload
 (defun xah-lookup-google (&optional *word)
-  "Lookup current word or text selection in Google Search."
+  "Lookup current word or text selection in Google Search.
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://www.google.com/search?q=�") )
+   (get 'xah-lookup-google 'xah-lookup-url)
+   (get 'xah-lookup-google 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-google 'xah-lookup-url "http://www.google.com/search?q=word02051")
+(put 'xah-lookup-google 'xah-lookup-browser-function 'browse-url)
 
 ;;;###autoload
 (defun xah-lookup-wikipedia (&optional *word)
-  "Lookup current word or text selection in Wikipedia."
+  "Lookup current word or text selection in Wikipedia.
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://en.wikipedia.org/wiki/�") )
+   (get 'xah-lookup-wikipedia 'xah-lookup-url )
+   (get 'xah-lookup-wikipedia 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-wikipedia 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
+(put 'xah-lookup-wikipedia 'xah-lookup-browser-function 'browse-url)
 
 ;;;###autoload
 (defun xah-lookup-word-definition (&optional *word)
-  "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'."
+  "Lookup definition of current word or text selection in URL `http://thefreedictionary.com/'.
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://www.thefreedictionary.com/�"
-   xah-lookup-dictionary-browser-function) )
+   (get 'xah-lookup-word-definition 'xah-lookup-url )
+   (get 'xah-lookup-word-definition 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/word02051")
+(put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-word-dict-org (&optional *word)
-  "Lookup definition of current word or text selection in URL `http://dict.org/'."
+  "Lookup definition of current word or text selection in URL `http://dict.org/'.
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=�"
-   xah-lookup-dictionary-browser-function))
+   (get 'xah-lookup-word-dict-org 'xah-lookup-url )
+   (get 'xah-lookup-word-dict-org 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-word-dict-org 'xah-lookup-url "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=word02051")
+(put 'xah-lookup-word-dict-org 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-answers.com (&optional *word)
-  "Lookup current word or text selection in URL `http://answers.com/'."
+  "Lookup current word or text selection in URL `http://answers.com/'.
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://www.answers.com/main/ntquery?s=�"
-   xah-lookup-dictionary-browser-function))
+   (get 'xah-lookup-answers.com 'xah-lookup-url )
+   (get 'xah-lookup-answers.com 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-answers.com 'xah-lookup-url "http://www.answers.com/main/ntquery?s=word02051")
+(put 'xah-lookup-answers.com 'xah-lookup-browser-function 'browse-url)
 
 (defun xah-lookup-wiktionary (&optional *word)
-  "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'"
+  "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'
+Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
    *word
-   "http://en.wiktionary.org/wiki/�"
-   xah-lookup-dictionary-browser-function))
+   (get 'xah-lookup-wiktionary 'xah-lookup-url )
+   (get 'xah-lookup-wiktionary 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-wiktionary 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
+(put 'xah-lookup-wiktionary 'xah-lookup-browser-function 'browse-url)
 
 (defun xah-lookup-all-dictionaries (&optional *word)
   "Lookup definition in many dictionaries.
