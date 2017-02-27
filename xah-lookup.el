@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.1.0
+;; Version: 3.2.0
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -242,11 +242,6 @@ Version 2017-02-09"
 (put 'xah-lookup-word-dict-org 'xah-lookup-url "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=word02051")
 (put 'xah-lookup-word-dict-org 'xah-lookup-browser-function 'eww)
 
-
-
-
-
-
 (defun xah-lookup-wiktionary (&optional *word)
   "Lookup definition of current word or text selection in URL `http://en.wiktionary.org/'
 Version 2017-02-09"
@@ -258,6 +253,18 @@ Version 2017-02-09"
 
 (put 'xah-lookup-wiktionary 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
 (put 'xah-lookup-wiktionary 'xah-lookup-browser-function xah-lookup-browser-function)
+
+(defun xah-lookup-etymology (&optional *word)
+  "Lookup etymology of current word or text selection in URL `http://www.etymonline.com/index.php?search=curlicue'.
+Version 2017-02-27"
+  (interactive)
+  (xah-lookup-word-on-internet
+   *word
+   (get 'xah-lookup-etymology 'xah-lookup-url )
+   (get 'xah-lookup-etymology 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-etymology 'xah-lookup-url "http://www.etymonline.com/index.php?search=word02051")
+(put 'xah-lookup-etymology 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-all-dictionaries (&optional *word)
   "Lookup definition in many dictionaries.
