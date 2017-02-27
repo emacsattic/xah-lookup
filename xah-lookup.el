@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.2.0
+;; Version: 3.2.1
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -23,6 +23,7 @@
 ;; • xah-lookup-word-definition  ; 【C-h 9】
 ;; • xah-lookup-word-dict-org
 ;; • xah-lookup-wiktionary
+;; • xah-lookup-etymology
 
 ;; If there's a text selection (a phrase you want to lookup), these commands will lookup the selected text.
 
