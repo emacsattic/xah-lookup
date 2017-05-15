@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.2.1
+;; Version: 3.2.3
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -18,9 +18,9 @@
 ;; This package provide commands for looking up the web of word under cursor.
 
 ;; • xah-lookup-word-on-internet
-;; • xah-lookup-google           ; 【C-h 7】
-;; • xah-lookup-wikipedia        ; 【C-h 8】
-;; • xah-lookup-word-definition  ; 【C-h 9】
+;; • xah-lookup-google
+;; • xah-lookup-wikipedia
+;; • xah-lookup-word-definition
 ;; • xah-lookup-word-dict-org
 ;; • xah-lookup-wiktionary
 ;; • xah-lookup-etymology
@@ -226,9 +226,14 @@ Version 2017-02-09"
   (xah-lookup-word-on-internet
    *word
    (get 'xah-lookup-word-definition 'xah-lookup-url )
-   (get 'xah-lookup-word-definition 'xah-lookup-browser-function )))
+   (get 'xah-lookup-word-definition 'xah-lookup-browser-function ))
+  (scroll-up-command 70)
+  ;;
+  )
 
+(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.ahdictionary.com/word/search.html?q=word02051")
 (put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/word02051")
+
 (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-word-dict-org (&optional *word)
@@ -282,9 +287,24 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 
 (put 'xah-lookup-all-dictionaries 'xah-lookup-browser-function 'browse-url)
 
-(define-key help-map (kbd "7") 'xah-lookup-google)
-(define-key help-map (kbd "8") 'xah-lookup-wikipedia)
-(define-key help-map (kbd "9") 'xah-lookup-word-definition)
+(define-key help-map (kbd "1") 'xah-lookup-etymology)
+(define-key help-map (kbd "2") 'xah-lookup-word-dict-org)
+(define-key help-map (kbd "3") 'xah-lookup-google)
+(define-key help-map (kbd "4") 'xah-lookup-word-definition)
+(define-key help-map (kbd "5") 'xah-lookup-wikipedia)
+(define-key help-map (kbd "6") 'xah-lookup-wiktionary)
+(define-key help-map (kbd "7") 'xah-lookup-all-dictionaries)
+
+(when (boundp 'xah-fly-h-keymap)
+  (define-key xah-fly-h-keymap (kbd "1") 'xah-lookup-etymology)
+  (define-key xah-fly-h-keymap (kbd "2") 'xah-lookup-word-dict-org)
+  (define-key xah-fly-h-keymap (kbd "3") 'xah-lookup-google)
+  (define-key xah-fly-h-keymap (kbd "4") 'xah-lookup-word-definition)
+  (define-key xah-fly-h-keymap (kbd "5") 'xah-lookup-wikipedia)
+  (define-key xah-fly-h-keymap (kbd "6") 'xah-lookup-wiktionary)
+  (define-key xah-fly-h-keymap (kbd "7") 'xah-lookup-all-dictionaries)
+  ;;
+  )
 
 (provide 'xah-lookup)
 
