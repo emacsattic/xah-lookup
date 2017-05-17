@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.2.4
+;; Version: 3.2.5
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -293,7 +293,7 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 (define-key help-map (kbd "5") 'xah-lookup-wikipedia)
 (define-key help-map (kbd "6") 'xah-lookup-wiktionary)
 (define-key help-map (kbd "7") 'xah-lookup-all-dictionaries)
-(define-key help-map (kbd "9") 'xah-lookup-all-dictionaries)
+(define-key help-map (kbd "9") 'xah-lookup-word-definition)
 
 (when (boundp 'xah-fly-h-keymap)
   (define-key xah-fly-h-keymap (kbd "1") 'xah-lookup-etymology)
