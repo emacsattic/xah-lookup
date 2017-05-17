@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.2.3
+;; Version: 3.2.4
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -227,14 +227,13 @@ Version 2017-02-09"
    *word
    (get 'xah-lookup-word-definition 'xah-lookup-url )
    (get 'xah-lookup-word-definition 'xah-lookup-browser-function ))
-  (scroll-up-command 70)
   ;;
   )
 
 (put 'xah-lookup-word-definition 'xah-lookup-url "https://www.ahdictionary.com/word/search.html?q=word02051")
 (put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/word02051")
 
-(put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
+(put 'xah-lookup-word-definition 'xah-lookup-browser-function 'browse-url)
 
 (defun xah-lookup-word-dict-org (&optional *word)
   "Lookup definition of current word or text selection in URL `http://dict.org/'.
@@ -294,6 +293,7 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 (define-key help-map (kbd "5") 'xah-lookup-wikipedia)
 (define-key help-map (kbd "6") 'xah-lookup-wiktionary)
 (define-key help-map (kbd "7") 'xah-lookup-all-dictionaries)
+(define-key help-map (kbd "9") 'xah-lookup-all-dictionaries)
 
 (when (boundp 'xah-fly-h-keymap)
   (define-key xah-fly-h-keymap (kbd "1") 'xah-lookup-etymology)
@@ -303,6 +303,7 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
   (define-key xah-fly-h-keymap (kbd "5") 'xah-lookup-wikipedia)
   (define-key xah-fly-h-keymap (kbd "6") 'xah-lookup-wiktionary)
   (define-key xah-fly-h-keymap (kbd "7") 'xah-lookup-all-dictionaries)
+  (define-key xah-fly-h-keymap (kbd "9") 'xah-lookup-word-definition)
   ;;
   )
 
