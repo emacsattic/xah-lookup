@@ -5,10 +5,10 @@ A emacs lisp package for looking up Google, Dictionaries, Wikipedia, or programi
 Home page
 http://ergoemacs.org/emacs/xah-lookup.html
 
-Put in few bucks in my patreon.
+Put in 5 bucks in my patreon.
 https://www.patreon.com/xahlee
 
-or http://paypal.com
+or https://paypal.com
 pay to xah@xahlee.org
 
 Thanks.
