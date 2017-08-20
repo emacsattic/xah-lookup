@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.2.20170811
+;; Version: 3.2.20170820
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -11,7 +11,7 @@
 
 ;; This file is not part of GNU Emacs.
 
-;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 2.
+;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 3.
 
 ;;; Commentary:
 
