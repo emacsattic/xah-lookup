@@ -7,11 +7,10 @@
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
+;; License: GPL v3
 ;; URL: http://ergoemacs.org/emacs/xah-lookup.html
 
 ;; This file is not part of GNU Emacs.
-
-;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 3.
 
 ;;; Commentary:
 
