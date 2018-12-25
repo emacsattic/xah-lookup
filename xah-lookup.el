@@ -1,9 +1,9 @@
 ;;; xah-lookup.el --- look up word on internet. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2011-2017 by Xah Lee
+;; Copyright © 2011-2018 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.3.20180815055021
+;; Version: 3.4.20181225112943
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -17,7 +17,7 @@
 ;; This package provide commands for looking up the web of word under cursor.
 
 ;; • xah-lookup-word-on-internet
-;; • xah-lookup-google
+;; • xah-lookup-web
 ;; • xah-lookup-wikipedia
 ;; • xah-lookup-word-definition
 ;; • xah-lookup-word-dict-org
@@ -51,7 +51,7 @@
 ;; (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'eww)
 
 ;; To change/add keys, put the following in your emacs init. For example:
-;; (define-key help-map (kbd "7") 'xah-lookup-google) ; C-h 7
+;; (define-key help-map (kbd "7") 'xah-lookup-web) ; C-h 7
 ;; or
 ;; (global-set-key (kbd "<f2>") 'xah-lookup-word-definition) ; F2
 
@@ -205,6 +205,19 @@ Version 2017-02-09"
 (put 'xah-lookup-google 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
+(defun xah-lookup-web (&optional @word)
+  "Lookup current word or text selection in Google Search.
+Version 2017-02-09"
+  (interactive)
+  (xah-lookup-word-on-internet
+   @word
+   (get 'xah-lookup-web 'xah-lookup-url)
+   (get 'xah-lookup-web 'xah-lookup-browser-function )))
+
+(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/html?q=word02051")
+(put 'xah-lookup-web 'xah-lookup-browser-function xah-lookup-browser-function)
+
+;;;###autoload
 (defun xah-lookup-wikipedia (&optional @word)
   "Lookup current word or text selection in Wikipedia.
 Version 2017-02-09"
@@ -287,24 +300,12 @@ The dictionaries used are in `xah-lookup-dictionary-list'."
 
 (define-key help-map (kbd "1") 'xah-lookup-etymology)
 (define-key help-map (kbd "2") 'xah-lookup-word-dict-org)
-(define-key help-map (kbd "3") 'xah-lookup-google)
+(define-key help-map (kbd "3") 'xah-lookup-web)
 (define-key help-map (kbd "4") 'xah-lookup-word-definition)
 (define-key help-map (kbd "5") 'xah-lookup-wikipedia)
 (define-key help-map (kbd "6") 'xah-lookup-wiktionary)
 (define-key help-map (kbd "7") 'xah-lookup-all-dictionaries)
 (define-key help-map (kbd "9") 'xah-lookup-word-definition)
-
-(when (boundp 'xah-fly-h-keymap)
-  (define-key xah-fly-h-keymap (kbd "1") 'xah-lookup-etymology)
-  (define-key xah-fly-h-keymap (kbd "2") 'xah-lookup-word-dict-org)
-  (define-key xah-fly-h-keymap (kbd "3") 'xah-lookup-google)
-  (define-key xah-fly-h-keymap (kbd "4") 'xah-lookup-word-definition)
-  (define-key xah-fly-h-keymap (kbd "5") 'xah-lookup-wikipedia)
-  (define-key xah-fly-h-keymap (kbd "6") 'xah-lookup-wiktionary)
-  (define-key xah-fly-h-keymap (kbd "7") 'xah-lookup-all-dictionaries)
-  (define-key xah-fly-h-keymap (kbd "9") 'xah-lookup-word-definition)
-  ;;
-  )
 
 (provide 'xah-lookup)
 
