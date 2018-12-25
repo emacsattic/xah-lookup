@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2018 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.4.20181225112943
+;; Version: 3.4.20181225114156
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -206,7 +206,7 @@ Version 2017-02-09"
 
 ;;;###autoload
 (defun xah-lookup-web (&optional @word)
-  "Lookup current word or text selection in Google Search.
+  "Lookup current word or text selection in web search.
 Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
