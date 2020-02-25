@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2018 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.4.20181225114156
+;; Version: 3.4.20200224163102
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -214,7 +214,7 @@ Version 2017-02-09"
    (get 'xah-lookup-web 'xah-lookup-url)
    (get 'xah-lookup-web 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/html?q=word02051")
+(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/?q=word02051")
 (put 'xah-lookup-web 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
