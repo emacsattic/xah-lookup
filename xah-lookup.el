@@ -268,7 +268,7 @@ Version 2017-02-09"
    (get 'xah-lookup-wiktionary 'xah-lookup-url )
    (get 'xah-lookup-wiktionary 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-wiktionary 'xah-lookup-url "http://en.wikipedia.org/wiki/word02051")
+(put 'xah-lookup-wiktionary 'xah-lookup-url "http://en.wiktionary.org/wiki/word02051")
 (put 'xah-lookup-wiktionary 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-etymology (&optional @word)
