@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2020 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.4.20210708141836
+;; Version: 3.5.20210708150036
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -45,7 +45,7 @@
 
 ;; Each command can use a different URL. For example:
 ;; (require 'xah-lookup)
-;; (put 'xah-lookup-web 'xah-lookup-url "http://www.bing.com/search?q=WORDX")
+;; (put 'xah-lookup-web 'xah-lookup-url "https://www.bing.com/search?q=WORDX")
 
 ;; Each command can use a different browser. For example:
 ;; (require 'eww)
@@ -70,7 +70,7 @@
 ;; version 1.4, 2013-03-23 added 2 more dict to the xah-lookup-dictionary-list. Good for vocabulary researchers
 ;; version 1.3, 2012-05-11 added “xah-lookup-xah-lookup-dictionary-list”.
 ;; version 1.2, 2012-05-10 added “xah-lookup-answers.com”. Improved inline docs.
-;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=WORDX」 to 「http://www.thefreedictionary.com/WORDX」.
+;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=WORDX」 to 「https://www.thefreedictionary.com/WORDX」.
 ;; version 1.0, 2011-11-14 First released to public.
 
 
@@ -94,13 +94,13 @@
 (defcustom
   xah-lookup-dictionary-list
   [
-   "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX" ; 1913 Webster, WordNet
-   "http://www.thefreedictionary.com/WORDX"                         ; AHD
+   "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX" ; 1913 Webster, WordNet
+   "https://www.thefreedictionary.com/WORDX" ; AHD
    "https://en.wiktionary.org/wiki/WORDX"
    "https://www.google.com/search?q=define:+WORDX"     ; google
-   "http://www.etymonline.com/index.php?search=WORDX" ; etymology
+   "https://www.etymonline.com/index.php?search=WORDX" ; etymology
    ]
-  "A vector of website URLs for lookup words. Used by `xah-lookup-all-dictionaries'. http://wordyenglish.com/words/dictionary_tools.html "
+  "A vector of URLs used by `xah-lookup-all-dictionaries'."
   :group 'xah-lookup)
 
 (defun xah-lookup--asciify-region (&optional @from @to)
@@ -214,12 +214,12 @@ Version 2017-02-09"
    (get 'xah-lookup-wikipedia 'xah-lookup-url )
    (get 'xah-lookup-wikipedia 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-wikipedia 'xah-lookup-url "http://en.wikipedia.org/wiki/WORDX")
+(put 'xah-lookup-wikipedia 'xah-lookup-url "https://en.wikipedia.org/wiki/WORDX")
 (put 'xah-lookup-wikipedia 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
 (defun xah-lookup-word-definition (&optional @word)
-  "Lookup definition of current word or text selection in URL `http://www.thefreedictionary.com/curlicue'.
+  "Lookup definition of current word or text selection in URL `https://www.thefreedictionary.com/curlicue'.
 Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
@@ -230,12 +230,12 @@ Version 2017-02-09"
   )
 
 (put 'xah-lookup-word-definition 'xah-lookup-url "https://www.ahdictionary.com/word/search.html?q=WORDX")
-(put 'xah-lookup-word-definition 'xah-lookup-url "http://www.thefreedictionary.com/WORDX")
+(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.thefreedictionary.com/WORDX")
 
 (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'browse-url)
 
 (defun xah-lookup-word-dict-org (&optional @word)
-  "Lookup definition of current word or text selection in URL `http://dict.org/'.
+  "Lookup definition of current word or text selection in URL `https://dict.org/'.
 Version 2017-02-09"
   (interactive)
   (xah-lookup-word-on-internet
@@ -243,7 +243,7 @@ Version 2017-02-09"
    (get 'xah-lookup-word-dict-org 'xah-lookup-url )
    (get 'xah-lookup-word-dict-org 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-word-dict-org 'xah-lookup-url "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX")
+(put 'xah-lookup-word-dict-org 'xah-lookup-url "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX")
 (put 'xah-lookup-word-dict-org 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-wiktionary (&optional @word)
@@ -259,7 +259,7 @@ Version 2017-02-09"
 (put 'xah-lookup-wiktionary 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-etymology (&optional @word)
-  "Lookup etymology of current word or text selection in URL `http://www.etymonline.com/search?q=curlicue'.
+  "Lookup etymology of current word or text selection in URL `https://www.etymonline.com/search?q=curlicue'.
 Version 2018-08-15"
   (interactive)
   (xah-lookup-word-on-internet
@@ -267,7 +267,7 @@ Version 2018-08-15"
    (get 'xah-lookup-etymology 'xah-lookup-url )
    (get 'xah-lookup-etymology 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-etymology 'xah-lookup-url "http://www.etymonline.com/search?q=WORDX")
+(put 'xah-lookup-etymology 'xah-lookup-url "https://www.etymonline.com/search?q=WORDX")
 (put 'xah-lookup-etymology 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-all-dictionaries (&optional @word)
