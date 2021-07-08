@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2020 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.5.20210708150036
+;; Version: 3.5.20210708150306
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -45,7 +45,7 @@
 
 ;; Each command can use a different URL. For example:
 ;; (require 'xah-lookup)
-;; (put 'xah-lookup-web 'xah-lookup-url "https://www.bing.com/search?q=WORDX")
+;; (put 'xah-lookup-web 'xah-lookup-url "https://www.bing.com/search?q=curlicue")
 
 ;; Each command can use a different browser. For example:
 ;; (require 'eww)
@@ -70,7 +70,7 @@
 ;; version 1.4, 2013-03-23 added 2 more dict to the xah-lookup-dictionary-list. Good for vocabulary researchers
 ;; version 1.3, 2012-05-11 added “xah-lookup-xah-lookup-dictionary-list”.
 ;; version 1.2, 2012-05-10 added “xah-lookup-answers.com”. Improved inline docs.
-;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=WORDX」 to 「https://www.thefreedictionary.com/WORDX」.
+;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=curlicue」 to 「https://www.thefreedictionary.com/curlicue」.
 ;; version 1.0, 2011-11-14 First released to public.
 
 
@@ -94,11 +94,11 @@
 (defcustom
   xah-lookup-dictionary-list
   [
-   "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX" ; 1913 Webster, WordNet
-   "https://www.thefreedictionary.com/WORDX" ; AHD
-   "https://en.wiktionary.org/wiki/WORDX"
-   "https://www.google.com/search?q=define:+WORDX"     ; google
-   "https://www.etymonline.com/index.php?search=WORDX" ; etymology
+   "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=curlicue" ; 1913 Webster, WordNet
+   "https://www.thefreedictionary.com/curlicue" ; AHD
+   "https://en.wiktionary.org/wiki/curlicue"
+   "https://www.google.com/search?q=define:+curlicue"     ; google
+   "https://www.etymonline.com/index.php?search=curlicue" ; etymology
    ]
   "A vector of URLs used by `xah-lookup-all-dictionaries'."
   :group 'xah-lookup)
@@ -152,8 +152,8 @@ Version 2014-10-20"
   "Look up current word or text selection in a online reference site.
 This command launches/switches you to default browser.
 
-@URL a is URL string in this form: 「https://en.wiktionary.org/wiki/WORDX」.
-the 「WORDX」 is a placeholder for the query string.
+@URL a is URL string in this form: 「https://en.wiktionary.org/wiki/curlicue」.
+the 「curlicue」 is a placeholder for the query string.
 
 If @URL is nil, Google Search is used.
 
@@ -172,8 +172,8 @@ Version 2017-02-09"
     (setq $refUrl
           (if @url
               @url
-            "https://www.google.com/search?q=WORDX" ))
-    (setq $myUrl (replace-regexp-in-string "WORDX" $word $refUrl t t))
+            "https://www.google.com/search?q=curlicue" ))
+    (setq $myUrl (replace-regexp-in-string "curlicue" $word $refUrl t t))
     (if @browser-function
         (funcall @browser-function $myUrl)
       (funcall xah-lookup-browser-function $myUrl))))
@@ -188,7 +188,7 @@ Version 2017-02-09"
    (get 'xah-lookup-google 'xah-lookup-url)
    (get 'xah-lookup-google 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-google 'xah-lookup-url "https://www.google.com/search?q=WORDX")
+(put 'xah-lookup-google 'xah-lookup-url "https://www.google.com/search?q=curlicue")
 (put 'xah-lookup-google 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
@@ -201,7 +201,7 @@ Version 2017-02-09"
    (get 'xah-lookup-web 'xah-lookup-url)
    (get 'xah-lookup-web 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/?q=WORDX")
+(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/?q=curlicue")
 (put 'xah-lookup-web 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
@@ -214,7 +214,7 @@ Version 2017-02-09"
    (get 'xah-lookup-wikipedia 'xah-lookup-url )
    (get 'xah-lookup-wikipedia 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-wikipedia 'xah-lookup-url "https://en.wikipedia.org/wiki/WORDX")
+(put 'xah-lookup-wikipedia 'xah-lookup-url "https://en.wikipedia.org/wiki/curlicue")
 (put 'xah-lookup-wikipedia 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
@@ -229,8 +229,8 @@ Version 2017-02-09"
   ;;
   )
 
-(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.ahdictionary.com/word/search.html?q=WORDX")
-(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.thefreedictionary.com/WORDX")
+(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.ahdictionary.com/word/search.html?q=curlicue")
+(put 'xah-lookup-word-definition 'xah-lookup-url "https://www.thefreedictionary.com/curlicue")
 
 (put 'xah-lookup-word-definition 'xah-lookup-browser-function 'browse-url)
 
@@ -243,7 +243,7 @@ Version 2017-02-09"
    (get 'xah-lookup-word-dict-org 'xah-lookup-url )
    (get 'xah-lookup-word-dict-org 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-word-dict-org 'xah-lookup-url "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=WORDX")
+(put 'xah-lookup-word-dict-org 'xah-lookup-url "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=curlicue")
 (put 'xah-lookup-word-dict-org 'xah-lookup-browser-function 'eww)
 
 (defun xah-lookup-wiktionary (&optional @word)
@@ -255,7 +255,7 @@ Version 2017-02-09"
    (get 'xah-lookup-wiktionary 'xah-lookup-url )
    (get 'xah-lookup-wiktionary 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-wiktionary 'xah-lookup-url "https://en.wiktionary.org/wiki/WORDX")
+(put 'xah-lookup-wiktionary 'xah-lookup-url "https://en.wiktionary.org/wiki/curlicue")
 (put 'xah-lookup-wiktionary 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-etymology (&optional @word)
@@ -267,7 +267,7 @@ Version 2018-08-15"
    (get 'xah-lookup-etymology 'xah-lookup-url )
    (get 'xah-lookup-etymology 'xah-lookup-browser-function )))
 
-(put 'xah-lookup-etymology 'xah-lookup-url "https://www.etymonline.com/search?q=WORDX")
+(put 'xah-lookup-etymology 'xah-lookup-url "https://www.etymonline.com/search?q=curlicue")
 (put 'xah-lookup-etymology 'xah-lookup-browser-function xah-lookup-browser-function)
 
 (defun xah-lookup-all-dictionaries (&optional @word)
