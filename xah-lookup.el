@@ -1,9 +1,9 @@
 ;;; xah-lookup.el --- look up word on internet. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2011-2020 by Xah Lee
+;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.5.20210708150306
+;; Version: 3.6.20210731180124
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -78,21 +78,18 @@
 
 (require 'browse-url) ; in emacs
 
-(defcustom
-  xah-lookup-browser-function
+
+(defvar xah-lookup-browser-function
   'browse-url
   "Function to call to launch browser. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
-  :group 'xah-lookup
   )
 
-(defcustom
-  xah-lookup-dictionary-browser-function
+(defvar xah-lookup-dictionary-browser-function
   'browse-url
   "Function to call for English definition lookup. Default is 'browse-url. You can also use 'eww. For dictionary lookup, use `xah-lookup-dictionary-browser-function'"
-  :group 'xah-lookup)
+  )
 
-(defcustom
-  xah-lookup-dictionary-list
+(defvar xah-lookup-dictionary-list
   [
    "https://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=curlicue" ; 1913 Webster, WordNet
    "https://www.thefreedictionary.com/curlicue" ; AHD
@@ -101,7 +98,7 @@
    "https://www.etymonline.com/index.php?search=curlicue" ; etymology
    ]
   "A vector of URLs used by `xah-lookup-all-dictionaries'."
-  :group 'xah-lookup)
+)
 
 (defun xah-lookup--asciify-region (&optional @from @to)
   "Change some Unicode characters into equivalent ASCII ones.
