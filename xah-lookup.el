@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.6.20210828120428
+;; Version: 3.6.20210901151112
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -197,8 +197,7 @@ Version 2017-02-09"
    Word
    (get 'xah-lookup-web 'xah-lookup-url)
    (get 'xah-lookup-web 'xah-lookup-browser-function )))
-
-(put 'xah-lookup-web 'xah-lookup-url "https://duckduckgo.com/?q=curlicue")
+(put 'xah-lookup-web 'xah-lookup-url "https://www.startpage.com/do/search?q=curlicue")
 (put 'xah-lookup-web 'xah-lookup-browser-function xah-lookup-browser-function)
 
 ;;;###autoload
