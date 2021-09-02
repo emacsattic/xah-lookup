@@ -118,7 +118,7 @@ Version 2014-10-20"
       (mapc
        (lambda ($pair)
          (goto-char (point-min))
-         (while (search-forward-regexp (elt $pair 0) (point-max) t)
+         (while (re-search-forward (elt $pair 0) (point-max) t)
            (replace-match (elt $pair 1))))
        [
         ["á\\|à\\|â\\|ä\\|ã\\|å" "a"]
