@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 3.6.20210901151112
+;; Version: 3.6.20210925095204
 ;; Created: 14 Nov 2011
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: help, docs, convenience
@@ -73,11 +73,10 @@
 ;; version 1.1, 2012-05-09 changed the input from 「'symbol」 to 「'word」. Changed the English dictionary used from 「http://www.answers.com/main/ntquery?s=curlicue」 to 「https://www.thefreedictionary.com/curlicue」.
 ;; version 1.0, 2011-11-14 First released to public.
 
-
+;; HHH___________________________________________________________________
 ;;; Code:
 
 (require 'browse-url) ; in emacs
-
 
 (defvar xah-lookup-browser-function
   'browse-url
@@ -109,7 +108,7 @@ This function works on chars in European languages, and does not transcode arbit
 When called interactively, work on text selection or current line.
 Version 2014-10-20"
   (interactive
-   (if (use-region-p)
+   (if (region-active-p)
        (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-end-position))))
   (let ((case-fold-search t))
